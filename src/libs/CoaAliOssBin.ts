@@ -14,7 +14,9 @@ export class CoaAliOssBin {
 
   async getStream (remote: string) {
     const configs = this.requestConfigs('GET', remote)
-    const { data } = await axios.get(escape(remote), { ...configs, responseType: 'stream' })
+    // 如果不存在x-oss-process，则进行转义处理，保证签名成功
+    if (!remote.includes('x-oss-process=')) remote = escape(remote)
+    const { data } = await axios.get(remote, { ...configs, responseType: 'stream' })
     return data as Stream
   }
 
