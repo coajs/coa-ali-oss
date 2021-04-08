@@ -1,5 +1,4 @@
 // @ts-nocheck
-
 import { CoaAliOssBin, CoaAliOssObjectService } from '..'
 
 // bucket配置
