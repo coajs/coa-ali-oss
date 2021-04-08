@@ -1,6 +1,6 @@
 // @ts-nocheck
 
-import { CoaAliOssBin, CoaAliOssObjectService } from '.'
+import { CoaAliOssBin, CoaAliOssObjectService } from '..'
 
 // bucket配置
 const ossBucketConfig = {

@@ -2,7 +2,7 @@ import { CoaError } from 'coa-error'
 import { $, _, axios } from 'coa-helper'
 import * as fs from 'fs'
 import * as path from 'path'
-import { CoaAliOssBin } from './CoaAliOssBin'
+import { CoaAliOssBin } from '../libs/CoaAliOssBin'
 
 export class CoaAliOssObjectService {
 

@@ -2,7 +2,7 @@ import { _, axios } from 'coa-helper'
 import { secure } from 'coa-secure'
 import { escape } from 'querystring'
 import { Stream } from 'stream'
-import { CoaAliOss } from './typings'
+import { CoaAliOss } from '../typings'
 
 export class CoaAliOssBin {
 

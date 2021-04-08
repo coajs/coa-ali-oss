@@ -1,2 +1,2 @@
-export { CoaAliOssBin } from './CoaAliOssBin'
-export { CoaAliOssObjectService } from './CoaAliOssObjectService'
+export { CoaAliOssBin } from './libs/CoaAliOssBin'
+export { CoaAliOssObjectService } from './services/CoaAliOssObjectService'
