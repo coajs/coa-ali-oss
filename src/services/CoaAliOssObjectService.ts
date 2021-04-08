@@ -78,4 +78,11 @@ export class CoaAliOssObjectService {
   async delete (remote: string) {
     await this.bin.delete(remote)
   }
+
+  // 获取圆形图片路径
+  async getCircleImagePath (remote: string) {
+    const { width, height } = await this.imageInfo(remote)
+    const size = _.min([width, height])
+    return remote + `?x-oss-process=image/circle,r_${size}/format,png`
+  }
 }
