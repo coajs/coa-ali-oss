@@ -1,4 +1,4 @@
-import { _, axios } from 'coa-helper'
+import { axios, _ } from 'coa-helper'
 import { secure } from 'coa-secure'
 import { escape } from 'querystring'
 import { Stream } from 'stream'
@@ -76,8 +76,9 @@ export class CoaAliOssBin {
 
     const baseURL = `http://${this.config.bucket}.${this.config.region}.aliyuncs.com/`
     const maxContentLength = 1024 * 1024 * 1024 * 100 // 1024M * 100 = 100G
+    const maxBodyLength = 1024 * 1024 * 1024 * 10 // 1024M * 10 = 10G
 
-    return { headers, baseURL, maxContentLength }
+    return { headers, baseURL, maxContentLength, maxBodyLength }
   }
 
   // 签名
