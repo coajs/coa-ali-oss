@@ -18,6 +18,7 @@
   "scripts": {
     "dev": "tsc -w",
     "build": "rm -rf dist && tsc && cp package.json *.md dist && rm -rf dist/test",
+    "sync": "curl -X PUT 'https://npm.taobao.org/sync/coa-ali-oss?sync_upstream=true'",
     "publish-prerelease": "yarn build && yarn version --prerelease && cp package.json *.md dist && cd dist && rm -rf test && npm publish"
   },
   "dependencies": {
