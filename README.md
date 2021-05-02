@@ -5,9 +5,9 @@
 [![npm downloads](https://img.shields.io/npm/dm/coa-ali-oss.svg?style=flat-square)](http://npm-stat.com/charts.html?package=coa-ali-oss)
 [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg?style=flat-square)](https://github.com/coajs/coa-ali-oss/pulls)
 
-轻量极简的阿里云OSS库（Node.js版本）
+轻量的阿里云OSS库 for Node.js
 
-来源于一个实际生产项目，将常用的API和业务解耦后封装成此库，尚未覆盖到阿里云OSS的全部操作。后续会根据实际使用情况优化和扩充新的服务。如果急需用到其他接口，可以直接使用阿里云官方SDK [ali-oss](https://github.com/ali-sdk/ali-oss)
+来源于一个实际生产项目，将常用的API和业务解耦后封装成此库，尚未覆盖到阿里云OSS的全部操作。后续会根据实际使用情况优化和扩充新的服务。若需用到其他完整接口，可以直接使用阿里云官方SDK [ali-oss](https://github.com/ali-sdk/ali-oss)
 
 ## 特征
 
@@ -26,15 +26,15 @@ yarn add coa-ali-oss
 ### 创建配置实例
 
 ```typescript
-import { CoaEnv } from 'coa-ali-oss'
+import { CoaAliOssBin } from 'coa-ali-oss'
 
 // bucket配置
 const ossBucketConfig = {
   accessKeyId: 'LTAIOKxxxxxxWSue9q',
   accessKeySecret: 'pyTLRH0sGooAxxxxxxxxxxxxxxxxxANqPedamD',
   region: 'oss-cn-shanghai',
-  bucket: 'example-name',
-  origin: 'https://example.domain.com/'
+  bucket: 'bucket-name',
+  origin: 'https://example.coajs.com/'
 }
 
 // 创建一个配置实例
@@ -46,6 +46,8 @@ const ossBucketBin = new CoaAliOssBin(ossBucketConfig)
 操作Object的原始API详见 [阿里云帮助文档](https://help.aliyun.com/document_detail/31978.html)
 
 ```typescript
+import { CoaAliOssObjectService } from 'coa-ali-oss'
+
 // 创建一个Object服务
 const objectService = new CoaAliOssObjectService(ossBucketBin)
 

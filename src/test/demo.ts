@@ -6,8 +6,8 @@ const ossBucketConfig = {
   accessKeyId: 'LTAIOKxxxxxxWSue9q',
   accessKeySecret: 'pyTLRH0sGooAxxxxxxxxxxxxxxxxxANqPedamD',
   region: 'oss-cn-shanghai',
-  bucket: 'example-name',
-  origin: 'https://example.domain.com/'
+  bucket: 'bucket-name',
+  origin: 'https://example.coajs.com/'
 }
 
 // 创建一个配置实例
