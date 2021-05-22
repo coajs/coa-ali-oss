@@ -1,11 +1,10 @@
 import { CoaError } from 'coa-error'
-import { $, _, axios } from 'coa-helper'
+import { $, axios, _ } from 'coa-helper'
 import * as fs from 'fs'
 import * as path from 'path'
 import { CoaAliOssBin } from '../libs/CoaAliOssBin'
 
 export class CoaAliOssObjectService {
-
   private readonly bin: CoaAliOssBin
 
   constructor (bin: CoaAliOssBin) {
@@ -29,7 +28,6 @@ export class CoaAliOssObjectService {
 
   // 将服务器文件下载到本地
   async download (remote: string, local: string) {
-
     const res = await this.bin.getStream(remote)
 
     // 创建本地文件夹
@@ -37,7 +35,7 @@ export class CoaAliOssObjectService {
     const writer = fs.createWriteStream(local)
 
     // 等待文件写入完成
-    await new Promise(resolve => res.pipe(writer).on('close', resolve))
+    await new Promise((resolve) => res.pipe(writer).on('close', resolve))
   }
 
   // 将Buffer写入服务器
@@ -46,8 +44,7 @@ export class CoaAliOssObjectService {
   }
 
   // 将本地文件上传到服务器
-  async upload (remote: string, local: string, deleteSource: boolean = true) {
-
+  async upload (remote: string, local: string, deleteSource = true) {
     const data = fs.createReadStream(local)
 
     await this.bin.put(remote, data)
@@ -63,10 +60,13 @@ export class CoaAliOssObjectService {
 
   // 获取图片的基本信息
   async imageInfo (remote: string) {
-
     const url = this.bin.config.origin + remote + '?x-oss-process=image/info'
-    const { data } = await axios.get(url).catch(async () => CoaError.message('OssImage.NoImage', '图片不存在'))
-    const info = _.isPlainObject(data) ? $.camelCaseKeys(data) : data as { [k: string]: any }
+    const { data } = await axios
+      .get(url)
+      .catch(async () => CoaError.message('OssImage.NoImage', '图片不存在'))
+    const info = _.isPlainObject(data)
+      ? $.camelCaseKeys(data)
+      : (data as { [k: string]: any })
     const width = _.toNumber(info.imageWidth.value)
     const height = _.toNumber(info.imageHeight.value)
     const fileSize = _.toNumber(info.fileSize.value)

@@ -1,6 +1,6 @@
 {
   "name": "coa-ali-oss",
-  "version": "0.0.0",
+  "version": "1.1.1",
   "description": "轻量的阿里云OSS库 for Node.js",
   "keywords": [
     "coajs",
@@ -20,8 +20,8 @@
   "scripts": {
     "dev": "tsc -w",
     "build": "rm -rf dist && tsc && cp package.json *.md dist && rm -rf dist/test",
-    "sync": "curl -X PUT 'https://npm.taobao.org/sync/coa-ali-oss?sync_upstream=true'",
-    "publish-prerelease": "yarn build && yarn version --prerelease && cp package.json dist && cd dist && npm publish"
+    "lint": "eslint .",
+    "sync": "curl -X PUT 'https://npm.taobao.org/sync/coa-ali-oss?sync_upstream=true'"
   },
   "dependencies": {
     "coa-error": "^1.1.3",
@@ -30,6 +30,13 @@
   },
   "devDependencies": {
     "@types/node": "^14.14.37",
+    "@typescript-eslint/eslint-plugin": "^4.24.0",
+    "@typescript-eslint/parser": "^4.24.0",
+    "eslint": "^7.27.0",
+    "eslint-config-standard-with-typescript": "^20.0.0",
+    "eslint-plugin-import": "^2.23.3",
+    "eslint-plugin-node": "^11.1.0",
+    "eslint-plugin-promise": "^5.1.0",
     "typescript": "^4.2.4"
   }
 }

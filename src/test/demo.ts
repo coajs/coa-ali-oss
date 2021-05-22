@@ -30,7 +30,7 @@ await objectService.head('user/avatar/001.png')
 await objectService.download('user/avatar/001.png', '/local-path/avatar/001.png')
 
 // 将Buffer写入服务器
-await objectService.put('user/avatar/002.png', Buffer.from([/*buffer数据*/]))
+await objectService.put('user/avatar/002.png', Buffer.from([/* buffer数据 */]))
 
 // 将本地文件上传到服务器
 await objectService.download('user/avatar/002.png', '/local-path/avatar/002.png')

@@ -5,7 +5,6 @@ import { Stream } from 'stream'
 import { CoaAliOss } from '../typings'
 
 export class CoaAliOssBin {
-
   public readonly config: CoaAliOss.Config
 
   constructor (config: CoaAliOss.Config) {
@@ -43,7 +42,6 @@ export class CoaAliOssBin {
 
   // 获取一个新的上传token
   getNewToken (dir: string, ms: number = 24 * 3600 * 1e3) {
-
     dir = dir.trim().replace(/\/+/g, '/')
 
     const accessid = this.config.accessKeyId
@@ -51,13 +49,13 @@ export class CoaAliOssBin {
     const origin = this.config.origin
     const endpoint = `http://${this.config.bucket}.${this.config.region}.aliyuncs.com/`
 
-    const expire = _.now() + ms //设置失效时间为1天
+    const expire = _.now() + ms // 设置失效时间为1天
     const policyText = {
-      'expiration': new Date(expire).toISOString(), //设置该Policy的失效时间，超过这个失效时间之后，就没有办法通过这个policy上传文件了
-      'conditions': [
+      expiration: new Date(expire).toISOString(), // 设置该Policy的失效时间，超过这个失效时间之后，就没有办法通过这个policy上传文件了
+      conditions: [
         // ["content-length-range", 0, 1048576000], // 设置上传文件的大小限制
-        ['starts-with', '$key', dir], // 设置上传文件的文件目录限制
-      ],
+        ['starts-with', '$key', dir] // 设置上传文件的文件目录限制
+      ]
     }
 
     const policy = secure.base64_encode(JSON.stringify(policyText))
@@ -68,11 +66,10 @@ export class CoaAliOssBin {
 
   // request配置
   requestConfigs (method: string, object: string, headers: { [header: string]: string } = {}) {
-
-    headers['Date'] = new Date().toUTCString()
+    headers.Date = new Date().toUTCString()
     headers['Content-MD5'] = ''
     headers['Content-Type'] = ''
-    headers['Authorization'] = this.signature(method, object, headers)
+    headers.Authorization = this.signature(method, object, headers)
 
     const baseURL = `http://${this.config.bucket}.${this.config.region}.aliyuncs.com/`
     const maxContentLength = 1024 * 1024 * 1024 * 100 // 1024M * 100 = 100G
@@ -83,23 +80,21 @@ export class CoaAliOssBin {
 
   // 签名
   private signature (method: string, object: string, headers: { [header: string]: string }) {
-
-    const x_oss_list = [] as string[], signs = [] as string[]
+    const xOssList = [] as string[]; const signs = [] as string[]
 
     _.forEach(headers, (v, k) => {
-      k.startsWith('x-oss') && x_oss_list.push(k + ':' + v)
+      k.startsWith('x-oss') && xOssList.push(k + ':' + v)
     })
 
     signs.push(method || '')
     signs.push(headers['Content-Md5'] || '')
     signs.push(headers['Content-Type'] || '')
-    signs.push(headers['Date'] || '')
-    signs.push(...x_oss_list.sort())
+    signs.push(headers.Date || '')
+    signs.push(...xOssList.sort())
     signs.push(`/${this.config.bucket}/${object}`)
 
     const signature = secure.sha1_hmac(signs.join('\n'), this.config.accessKeySecret, 'base64')
 
     return `OSS ${this.config.accessKeyId}:${signature}`
   }
-
 }
