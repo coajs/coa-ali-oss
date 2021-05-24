@@ -9,9 +9,7 @@ on:
       - created
 
 jobs:
-
   publish-npm:
-
     name: NPM Publish
 
     if: github.repository_owner == 'coajs'

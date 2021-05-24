@@ -5,15 +5,15 @@
 [![npm downloads](https://img.shields.io/npm/dm/coa-ali-oss.svg?style=flat-square)](http://npm-stat.com/charts.html?package=coa-ali-oss)
 [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg?style=flat-square)](https://github.com/coajs/coa-ali-oss/pulls)
 
-轻量的阿里云OSS库 for Node.js
+轻量的阿里云 OSS 库 for Node.js
 
-来源于一个实际生产项目，将常用的API和业务解耦后封装成此库，尚未覆盖到阿里云OSS的全部操作。后续会根据实际使用情况优化和扩充新的服务。若需用到其他完整接口，可以直接使用阿里云官方SDK [ali-oss](https://github.com/ali-sdk/ali-oss)
+来源于一个实际生产项目，将常用的 API 和业务解耦后封装成此库，尚未覆盖到阿里云 OSS 的全部操作。后续会根据实际使用情况优化和扩充新的服务。若需用到其他完整接口，可以直接使用阿里云官方 SDK [ali-oss](https://github.com/ali-sdk/ali-oss)
 
 ## 特征
 
-- **轻量** 相对于官方的SDK，无第三方依赖，更轻量
-- **COA友好** 配合COA使用，效率更高，报错信息更友好
-- **TypeScript** 使用TypeScript编写，类型约束，IDE友好
+- **轻量** 相对于官方的 SDK，无第三方依赖，更轻量
+- **COA 友好** 配合 COA 使用，效率更高，报错信息更友好
+- **TypeScript** 使用 TypeScript 编写，类型约束，IDE 友好
 
 ## 用法
 
@@ -34,16 +34,16 @@ const ossBucketConfig = {
   accessKeySecret: 'pyTLRH0sGooAxxxxxxxxxxxxxxxxxANqPedamD',
   region: 'oss-cn-shanghai',
   bucket: 'bucket-name',
-  origin: 'https://example.coajs.com/'
+  origin: 'https://example.coajs.com/',
 }
 
 // 创建一个配置实例
 const ossBucketBin = new CoaAliOssBin(ossBucketConfig)
 ```
 
-### 操作Object
+### 操作 Object
 
-操作Object的原始API详见 [阿里云帮助文档](https://help.aliyun.com/document_detail/31978.html)
+操作 Object 的原始 API 详见 [阿里云帮助文档](https://help.aliyun.com/document_detail/31978.html)
 
 ```typescript
 import { CoaAliOssObjectService } from 'coa-ali-oss'
@@ -65,7 +65,12 @@ await objectService.head('user/avatar/001.png')
 await objectService.download('user/avatar/001.png', '/local-path/avatar/001.png')
 
 // 将Buffer写入服务器
-await objectService.put('user/avatar/002.png', Buffer.from([/*buffer数据*/]))
+await objectService.put(
+  'user/avatar/002.png',
+  Buffer.from([
+    /*buffer数据*/
+  ])
+)
 
 // 将本地文件上传到服务器
 await objectService.download('user/avatar/002.png', '/local-path/avatar/002.png')

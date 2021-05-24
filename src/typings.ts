@@ -3,7 +3,7 @@ const config = {
   accessKeySecret: '',
   bucket: '',
   region: '',
-  origin: ''
+  origin: '',
 }
 
 export declare namespace CoaAliOss {

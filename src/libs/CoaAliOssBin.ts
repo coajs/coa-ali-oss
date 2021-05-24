@@ -7,11 +7,11 @@ import { CoaAliOss } from '../typings'
 export class CoaAliOssBin {
   public readonly config: CoaAliOss.Config
 
-  constructor (config: CoaAliOss.Config) {
+  constructor(config: CoaAliOss.Config) {
     this.config = config
   }
 
-  async getStream (remote: string) {
+  async getStream(remote: string) {
     const configs = this.requestConfigs('GET', remote)
     // 如果不存在x-oss-process，则进行转义处理，保证签名成功
     if (!remote.includes('x-oss-process=')) remote = escape(remote)
@@ -19,29 +19,29 @@ export class CoaAliOssBin {
     return data as Stream
   }
 
-  async getBuffer (remote: string) {
+  async getBuffer(remote: string) {
     const configs = this.requestConfigs('GET', remote)
     const { data } = await axios.get(escape(remote), { ...configs, responseType: 'arraybuffer' })
     return data as Buffer
   }
 
-  async head (remote: string, headers = {}) {
+  async head(remote: string, headers = {}) {
     const configs = this.requestConfigs('HEAD', remote, headers)
-    return await axios.head(escape(remote), configs).catch(e => e)
+    return await axios.head(escape(remote), configs).catch((e) => e)
   }
 
-  async put (remote: string, data?: Buffer | Stream, headers = {}) {
+  async put(remote: string, data?: Buffer | Stream, headers = {}) {
     const configs = this.requestConfigs('PUT', remote, headers)
     await axios.put(escape(remote), data, configs)
   }
 
-  async delete (remote: string) {
+  async delete(remote: string) {
     const configs = this.requestConfigs('DELETE', remote)
     await axios.delete(escape(remote), configs)
   }
 
   // 获取一个新的上传token
-  getNewToken (dir: string, ms: number = 24 * 3600 * 1e3) {
+  getNewToken(dir: string, ms: number = 24 * 3600 * 1e3) {
     dir = dir.trim().replace(/\/+/g, '/')
 
     const accessid = this.config.accessKeyId
@@ -54,8 +54,8 @@ export class CoaAliOssBin {
       expiration: new Date(expire).toISOString(), // 设置该Policy的失效时间，超过这个失效时间之后，就没有办法通过这个policy上传文件了
       conditions: [
         // ["content-length-range", 0, 1048576000], // 设置上传文件的大小限制
-        ['starts-with', '$key', dir] // 设置上传文件的文件目录限制
-      ]
+        ['starts-with', '$key', dir], // 设置上传文件的文件目录限制
+      ],
     }
 
     const policy = secure.base64_encode(JSON.stringify(policyText))
@@ -65,7 +65,7 @@ export class CoaAliOssBin {
   }
 
   // request配置
-  requestConfigs (method: string, object: string, headers: { [header: string]: string } = {}) {
+  requestConfigs(method: string, object: string, headers: { [header: string]: string } = {}) {
     headers.Date = new Date().toUTCString()
     headers['Content-MD5'] = ''
     headers['Content-Type'] = ''
@@ -79,8 +79,9 @@ export class CoaAliOssBin {
   }
 
   // 签名
-  private signature (method: string, object: string, headers: { [header: string]: string }) {
-    const xOssList = [] as string[]; const signs = [] as string[]
+  private signature(method: string, object: string, headers: { [header: string]: string }) {
+    const xOssList = [] as string[]
+    const signs = [] as string[]
 
     _.forEach(headers, (v, k) => {
       k.startsWith('x-oss') && xOssList.push(k + ':' + v)
