@@ -27,13 +27,19 @@ await objectService.get('user/avatar/001.png')
 await objectService.head('user/avatar/001.png')
 
 // 将服务器文件下载到本地
-await objectService.download('user/avatar/001.png', '/local-path/avatar/001.png')
+await objectService.download(
+  'user/avatar/001.png',
+  '/local-path/avatar/001.png'
+)
 
 // 将Buffer写入服务器
 await objectService.put('user/avatar/002.png', Buffer.from([] /* buffer数据 */))
 
 // 将本地文件上传到服务器
-await objectService.download('user/avatar/002.png', '/local-path/avatar/002.png')
+await objectService.download(
+  'user/avatar/002.png',
+  '/local-path/avatar/002.png'
+)
 
 // 将服务器上文件复制到另一个地方
 await objectService.copy('user/avatar/001.png', 'new/avatar/001.png')

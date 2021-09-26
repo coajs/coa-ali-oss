@@ -61,8 +61,12 @@ export class CoaAliOssObjectService {
   // 获取图片的基本信息
   async imageInfo(remote: string) {
     const url = this.bin.config.origin + remote + '?x-oss-process=image/info'
-    const { data } = await axios.get(url).catch(async () => CoaError.message('OssImage.NoImage', '图片不存在'))
-    const info = _.isPlainObject(data) ? $.camelCaseKeys(data) : (data as { [k: string]: any })
+    const { data } = await axios
+      .get(url)
+      .catch(async () => CoaError.message('OssImage.NoImage', '图片不存在'))
+    const info = _.isPlainObject(data)
+      ? $.camelCaseKeys(data)
+      : (data as { [k: string]: any })
     const width = _.toNumber(info.imageWidth.value)
     const height = _.toNumber(info.imageHeight.value)
     const fileSize = _.toNumber(info.fileSize.value)

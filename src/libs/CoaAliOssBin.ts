@@ -15,13 +15,19 @@ export class CoaAliOssBin {
     const configs = this.requestConfigs('GET', remote)
     // 如果不存在x-oss-process，则进行转义处理，保证签名成功
     if (!remote.includes('x-oss-process=')) remote = escape(remote)
-    const { data } = await axios.get(remote, { ...configs, responseType: 'stream' })
+    const { data } = await axios.get(remote, {
+      ...configs,
+      responseType: 'stream',
+    })
     return data as Stream
   }
 
   async getBuffer(remote: string) {
     const configs = this.requestConfigs('GET', remote)
-    const { data } = await axios.get(escape(remote), { ...configs, responseType: 'arraybuffer' })
+    const { data } = await axios.get(escape(remote), {
+      ...configs,
+      responseType: 'arraybuffer',
+    })
     return data as Buffer
   }
 
@@ -59,13 +65,21 @@ export class CoaAliOssBin {
     }
 
     const policy = secure.base64_encode(JSON.stringify(policyText))
-    const signature = secure.sha1_hmac(policy, this.config.accessKeySecret, 'base64')
+    const signature = secure.sha1_hmac(
+      policy,
+      this.config.accessKeySecret,
+      'base64'
+    )
 
     return { accessid, policy, signature, expire, host, origin, endpoint, dir }
   }
 
   // request配置
-  requestConfigs(method: string, object: string, headers: { [header: string]: string } = {}) {
+  requestConfigs(
+    method: string,
+    object: string,
+    headers: { [header: string]: string } = {}
+  ) {
     headers.Date = new Date().toUTCString()
     headers['Content-MD5'] = ''
     headers['Content-Type'] = ''
@@ -79,7 +93,11 @@ export class CoaAliOssBin {
   }
 
   // 签名
-  private signature(method: string, object: string, headers: { [header: string]: string }) {
+  private signature(
+    method: string,
+    object: string,
+    headers: { [header: string]: string }
+  ) {
     const xOssList = [] as string[]
     const signs = [] as string[]
 
@@ -94,7 +112,11 @@ export class CoaAliOssBin {
     signs.push(...xOssList.sort())
     signs.push(`/${this.config.bucket}/${object}`)
 
-    const signature = secure.sha1_hmac(signs.join('\n'), this.config.accessKeySecret, 'base64')
+    const signature = secure.sha1_hmac(
+      signs.join('\n'),
+      this.config.accessKeySecret,
+      'base64'
+    )
 
     return `OSS ${this.config.accessKeyId}:${signature}`
   }
